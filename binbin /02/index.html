@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+  </head>
+<body>
+
+  <h3>污染城市列表</h3>
+  <ul id="aqi-list">
+<!--   
+    <li>第一名：福州（样例），10</li>
+      <li>第二名：福州（样例），10</li> -->
+  </ul>
+
+<script type="text/javascript">
+
+var aqiData = [
+  ["北京", 90],
+  ["上海", 50],
+  ["福州", 10],
+  ["广州", 50],
+  ["成都", 90],
+  ["西安", 100]
+];
+
+function filterNum(arr1)
+{
+	if(arr1[1]>=50)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+var filtered=aqiData.filter(filterNum);
+  /*
+  在注释下方编写代码
+  遍历读取aqiData中各个城市的数据
+  将空气质量指数大于60的城市显示到aqi-list的列表中
+  */
+ //意思就是首先filter选出合适的；然后排序（难点）；最后有几个上几个（难点）
+//怎么读取类名不固定的数组的名称和数字
+//想法：难道是用arr[0][0]代表地名，arr[0][1]代表质量?
+//首先filter还行。选取一个arr，arr[1]>60这样
+//但是第二个排序怎么排，单纯的排序那太简单了。问题是怎么带着一堆东西排序？
+//3 最后全部导入HTML的ul列表，这个主要是不固定有几个，估计跟arguments一样有特定方法
+
+
+//看热门解题思路：2 使用sort方法将空气质量指数大于60的几个城市进行排序；
+//使用map方法对排好序的数组添加相应格式和相关文字，名次顺序可以使用数组的indexOf方法获得；
+//使用forEach方法将数组元素遍历添加到<ul>的innerHTML中。
+
+
+//就第二个来说：其实我觉得也可以。原本的sort也是按照字符串排序的。要按数字排序需要设置相减，这同样是需要一个function。现在应该只是把function里的数字改成aqi[1]。
+//实际看了MDN之后：对象可以按照某个属性排序（也就是按照[bj,60]里的数排序整个[]数组）
+var sorted=filtered.sort(function (a, b) {
+  if (a[1] > b[1]) {
+    return -1;
+  }
+  if (a[1] < b[1]) {
+    return 1;
+  }
+  // a 必须等于 b
+  return 0;
+});
+//document.write(sorted);//这样也能输出 但是还是好好写吧
+var newArr=[];
+for(var i=0;i<sorted.length;i++)//这里用map方法也好的。以后多用map吧
+{
+	newArr.push("<li>"+"第"+(i+1)+"名"+"："+sorted[i][0]+"，"+sorted[i][1]+"</li>");//第1名：西安，100
+}
+
+
+var mychar=document.getElementById("aqi-list");
+mychar.innerHTML=newArr;
+</script>
+</body>
+</html>
