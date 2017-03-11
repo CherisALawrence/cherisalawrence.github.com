@@ -1,0 +1,112 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 03</title>
+  </head>
+<body>
+
+  <ul id="source">
+    <li>北京空气质量：<b>90</b></li>
+    <li>上海空气质量：<b>70</b></li>
+    <li>天津空气质量：<b>80</b></li>
+    <li>广州空气质量：<b>50</b></li>
+    <li>深圳空气质量：<b>40</b></li>
+    <li>福州空气质量：<b>32</b></li>
+    <li>成都空气质量：<b>90</b></li>
+  </ul>
+
+  <ul id="resort">
+    <!-- 
+    <li>第一名：北京空气质量：<b>90</b></li>
+    <li>第二名：北京空气质量：<b>90</b></li>
+    <li>第三名：北京空气质量：<b>90</b></li>
+     -->
+
+  </ul>
+
+  <button id="sort-btn" onclick="init()">排序</button>
+
+<script type="text/javascript">
+
+/**
+ * getData方法
+ * 读取id为source的列表，获取其中城市名字及城市对应的空气质量
+ * 返回一个数组，格式见函数中示例
+ */
+
+var source=document.getElementById("source");
+var data=[];
+
+function getData() 
+{
+	var newSource=source.innerHTML.split("<li>");
+	for(var i=1;i<newSource.length;i++)//i=1?因为source[0]=""
+	{
+		data[i-1] = new Array();//i-1?如果i真从1开始
+		data[i-1][0]=newSource[i].slice(0,2);//slice 不修改原字符串
+		data[i-1][1]=newSource[i].slice(10,12);//slice0-2===0,1
+	}
+
+  	return data;
+}
+/*
+  data = [
+    ["北京", 90],
+    ["北京", 90]
+    ……
+  ]
+*/
+/**
+ * sortAqiData
+ * 按空气质量对data进行从小到大的排序
+ * 返回一个排序后的数组
+ */
+function sortAqiData(data) 
+{
+	var sorted=data.sort(function (a, b) {
+  		if (a[1] > b[1]) {//从大到小
+    		return -1;
+  		}
+  		if (a[1] < b[1]) {
+    		return 1;
+  		}
+  		return 0;
+ 	});
+ 	return sorted;
+}
+/**
+ * render
+ * 将排好序的城市及空气质量指数，输出显示到id位resort的列表中
+ * 格式见ul中的注释的部分
+ */
+function render(data) 
+{
+	var newData=[];
+	for(var j=0;j<data.length;j++)
+	{
+	//	data[j]="<li>"+"第"+(j+1)+"名"+"："+data[j][0]+"，"+data[i][1]+"</li>";//我知道这里哪里不行下面就可以了，data是传入的参数，修改的话估计有问题
+	newData[j]="<li>第"+(j+1)+"名："+data[j][0]+","+data[j][1]+"</li>";//第1名：西安，100
+	}
+	document.getElementById("resort").innerHTML=newData.join("");;//这里把array每个都换成HTML写法 再全部输出
+	return data;
+}
+
+function btnHandle() //这里是控制按钮的吧
+{
+  var aqiData = getData();
+  aqiData = sortAqiData(aqiData);//document.write(aqiData);
+  render(aqiData);
+}
+
+function init() 
+{
+  // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
+  	
+	btnHandle();//点击事件不需要这样 只需要在按钮那里 onClick=函数（）当然要写也行
+}
+
+
+</script>
+</body>
+</html>
