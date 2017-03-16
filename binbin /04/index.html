@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE JavaScript Task 04</title>
+		<style type="text/css">
+			ul
+			{
+				list-style-type: none;/*取消list换行*/
+				padding: 0;
+			}
+			ul li/*每个li才有红色*/
+			{
+				display: inline-block;
+				padding: 15px;
+				background: red;
+				color: #fff;
+				margin-right: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text" id="input" value="" />
+		<button id="button1" onclick="leftIn()">左侧入</button>
+		<button id="button2" onclick="rightIn()">右侧入</button>
+		<button id="button3" onclick="leftOut()">左侧出</button>
+		<button id="button4" onclick="rightOut()">右侧出</button>
+		
+		<ul id="queue1"><!--这里打算用list 然后css背景涂红 取消换行 取消黑点这样达到效果-->
+			
+		</ul>
+		
+		
+		<script type="text/javascript">//不是JavaScript
+			//在这之前先说一点：left1=getElementById之后获取的东西可以改 left1.innerHTML之类的
+			var queue=document.getElementById("queue1");//ul列表
+			function leftIn()
+			{
+				var left1=document.getElementById("input");//获取值
+				var addLi=document.createElement('li');
+				addLi.innerHTML=left1.value;
+				queue.insertBefore(addLi,queue.firstChild);//指定新加的li在列表的位置
+				document.getElementById("input").value="";//消除之前写的 这里可以写成left1.value 不过后面不行 格式一致麻烦点吧
+			}
+			
+			function rightIn()
+			{
+				var right1=document.getElementById("input");
+				var addLi=document.createElement('li');
+				addLi.innerHTML=right1.value;
+				queue.appendChild(addLi);//在列表的最后新加位置
+				document.getElementById("input").value="";
+			}
+			
+			var liList=queue.getElementsByTagName("li");//ul的ID获取之后的li的排序 难怪
+			
+			function leftOut()
+			{
+				var left2=liList[0].innerHTML;
+				liList[0].remove();
+				alert("删除的元素："+left2);
+				document.getElementById("input").value="";
+			}
+			
+			function rightOut()
+			{
+				var right2=liList[liList.length-1].innerHTML;
+				liList[liList.length-1].remove();
+				alert("删除的元素："+right2);
+				document.getElementById("input").value="";
+			}
+			
+			
+			/*点击队列中任何一个元素，则该元素会被从队列中删除*/
+			queue.addEventListener("click",function(e)//要加点击事件的可以这样加
+			{
+				if(event.target.nodeName.toLowerCase()=="li")
+				{
+					queue.removeChild(event.target);
+				}
+			})
+		</script>
+	</body>
+</html>
