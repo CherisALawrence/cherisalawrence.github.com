@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE JavaScript Task 04</title>
+		<style type="text/css">
+			ul
+			{
+				list-style-type: none;/*取消list换行*/
+				padding: 0;
+			}
+			ul li/*每个li才有红色*/
+			{/*P5:这里单纯的只是调节每个list box(红)的高度 至于显示数字那是另一回事了*/
+				display: inline-block;/*方块点击*/
+				background: red;/*全称background-color:*/
+				color: #fff;
+				margin-right: 10px;/*外边距 红色之间夹杂的白底*/
+				padding: 0px;/*内边距这里之前是15 所以整个都膨胀起来了 0的话就排的下*/
+				list-style: none;/*？*/
+				width: 20px;/*宽度 高度有JavaScript指定*/
+				vertical-align: bottom;/*沉底 不然不就一二三居中了么 大概*/
+				font-size: 10px;/*字体大小*/
+				text-align: center;/*字体位置 居中*/
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text" id="input" value="" />
+		<button id="button1" onclick="leftIn()">左侧入</button>
+		<button id="button2" onclick="rightIn()">右侧入</button>
+		<button id="button3" onclick="leftOut()">左侧出</button>
+		<button id="button4" onclick="rightOut()">右侧出</button>
+		<button id="button5" onclick="sort()">排序</button>
+		<!--这里打算用list 然后css背景涂红 取消换行 取消黑点这样达到效果-->
+		<ul id="queue1">
+			
+		</ul>
+		
+		
+		<script type="text/javascript">//不是JavaScript
+			//在这之前先说一点：left1=getElementById之后获取的东西可以改 left1.innerHTML之类的
+			var queue=document.getElementById("queue1");//ul列表的那啥，ID？
+			var liList=queue.getElementsByTagName("li");//ul的ID获取之后的li的排序的array？
+			
+			//创建一个函数 每次插入都调用 目的是补上长度为输入值
+			//update每次都是全部都遍历 并不是插入一个遍历一个 这样目前来说比较简单
+			function update()
+			{
+				for(var i=0;i<liList.length;i++)
+				{
+					liList[i].style.height=liList[i].innerHTML+"px";
+				}
+			}
+			
+			function leftIn()
+			{
+				var left1=document.getElementById("input");//获取值
+				if(/^[0-9]*$/.test(left1.value)===true && (left1.value>=10&&left1.value<=100) )
+				{//上面^的意思是从最前面开始 $意思末尾结束*表示匹配多次 不定次
+					if(liList.length>=60)//已验证 要验证记得数字改小
+					{
+						alert("list is more than 60 so can't add more");
+					}
+					else
+					{
+						var addLi=document.createElement('li');
+						addLi.innerHTML=left1.value;//添加柱图数字的地方 可以选择删了
+						queue.insertBefore(addLi,queue.firstChild);//指定新加的li在列表的位置
+						document.getElementById("input").value="";//消除之前写的 这里可以写成left1.value 不过后面不行 格式一致麻烦点吧
+						update();
+					}
+				}
+				else
+				{
+					alert("ERROR:Please input number between 10-100");
+					left1.value="";
+				}
+				
+			}
+			
+			function rightIn()
+			{
+				var right1=document.getElementById("input");
+				if(/^[0-9]*$/.test(right1.value)===true && (right1.value>=10&&right1.value<=100) )
+				{
+					if(liList.length>=60)//已验证 要验证记得数字改小
+					{
+						alert("this Lilist is more than 60 so can't add more");
+					}
+					else
+					{
+						var addLi=document.createElement('li');
+						addLi.innerHTML=right1.value;
+						queue.appendChild(addLi);//在列表的最后新加位置
+						document.getElementById("input").value="";
+						update();
+					}
+				}
+				else
+				{
+					alert("ERROR:Please input number between 10-100");
+					right1.value="";
+				}
+			}
+			
+			
+			
+			function leftOut()
+			{
+				var left2=liList[0].innerHTML;
+				liList[0].remove();
+				alert("删除的元素："+left2);
+				document.getElementById("input").value="";
+						update();
+			}
+			
+			function rightOut()
+			{
+				var right2=liList[liList.length-1].innerHTML;
+				liList[liList.length-1].remove();
+				alert("删除的元素："+right2);
+				document.getElementById("input").value="";
+						update();
+			}
+			
+			function sort()
+			{//最简单的方法：自带的sort函数 不过要注意10在2前面所以
+				//注意liList[0]显示的是[ObjectHTMLElement]也就是不能直接比
+				//liList[0].innerHTML;要用这种形式
+				//有没不提取文件而是直接修改的？以后想想
+				var data=[];
+				for(var y=0;y<liList.length;y++)
+				{
+					data[y]=liList[y].innerHTML;
+				}
+				data=data.sort(function(a,b)
+				{
+					return a-b;
+				});
+				for(var z=0;z<liList.length;z++)
+				{
+					liList[z].innerHTML=data[z];
+				}
+				update();
+				
+			}
+			
+			/*点击队列中任何一个元素，则该元素会被从队列中删除*/
+			queue.addEventListener("click",function(e)//要加点击事件的可以这样加
+			{
+				if(event.target.nodeName.toLowerCase()=="li")
+				{
+					queue.removeChild(event.target);
+				}
+			})
+		</script>
+	</body>
+</html>
