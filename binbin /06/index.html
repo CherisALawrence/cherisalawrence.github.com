@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE JavaScript Task 04</title>
+		<style type="text/css">
+			ul
+			{
+				list-style-type: none;/*取消list换行*/
+				padding: 0;
+			}
+			ul li/*每个li才有红色*/
+			{/*P5:这里单纯的只是调节每个list box(红)的高度 至于显示数字那是另一回事了*/
+				display: inline-block;/*方块点击*/
+				background: darkgray;/*全称background-color:*/
+				color: #000;
+				margin-right: 10px;/*外边距 红色之间夹杂的白底*/
+				padding: 10px;/*内边距这里之前是15 所以整个都膨胀起来了 0的话就排的下*/
+				list-style: none;/*？*/
+				vertical-align: bottom;/*沉底 不然不就一二三居中了么 大概*/
+				font-size: 10px;/*字体大小*/
+				text-align: center;/*字体位置 居中*/
+			}
+		</style>
+	</head>
+	<body>
+		<textarea type="text" id="input" value="" ></textarea>
+		<button id="button1" onclick="leftIn()">左侧入</button>
+		<button id="button2" onclick="rightIn()">右侧入</button>
+		<button id="button3" onclick="leftOut()">左侧出</button>
+		<button id="button4" onclick="rightOut()">右侧出</button>
+		<button id="button5" onclick="sort()">排序</button>
+		<br /><!--换行-->
+		<input type="text" id="input2" value="" />
+		<button id="button6" onclick="find()">查找</button>
+		<!--这里打算用list 然后css背景涂红 取消换行 取消黑点这样达到效果-->
+		<ul id="queue1">
+			
+		</ul>
+		
+		
+		<script type="text/javascript">//不是JavaScript
+			//在这之前先说一点：left1=getElementById之后获取的东西可以改 格式left1.innerHTML
+			var queue=document.getElementById("queue1");//ul列表的那啥，ID？
+			var liList=queue.getElementsByTagName("li");//ul的ID获取之后的li的排序的array？
+			var newArr=[];
+			//text-6更新：需要先把textarea变成一个array
+			
+			
+			
+			function arr()
+			{
+				var arr1=[];
+				newArr=[];
+				var str=document.getElementById("input").value;
+				arr1=str.split(/[\r,，、 　	]/);//split就不能split两次了所以用集合√
+				for(var i=0;i<arr1.length;i++)//这样就是新的array 为了清除第一个就是空格 然后分离所产生的假值
+				{
+    				if(Boolean(arr1[i])!==false||arr1[i]===0)
+    				{//判断是不是false、null、0、""、undefined 和 NaN这样的假值 当然这里0是可以的
+      					newArr.push(arr1[i]);//输入的内容弄进newArr
+    				}
+  				}
+			}
+			
+			function find()
+			{//想法是：遍历li 有匹配正则表达式的就直接改css的字体颜色 li整个改
+				var search=document.getElementById("input2").value;
+				for(var i=0;i<liList.length;i++)//li组成的array 这是可行的
+				{
+					if(new RegExp(search, 'i').test(liList[i].innerHTML)===true)
+					//不能用liList[i].value;会显示0 要用innerHTML
+					//不能用search.test();推测是因为 变量.text这么写是错的 /w/gi这种本身又算是"w" 要写成new RegExp(search, 'i')
+					// /w/i===new RegExp("w", 'i')
+					{
+						liList[i].style.background="red";//red要框起来不然是名为red的变量
+					}
+					else//这样就等于每次查询之前都重置了 不会查到最后全变红色
+					{
+						liList[i].style.background="darkgray";
+					}
+				}
+				document.getElementById("input2").value="";
+			}
+			
+			function leftIn()
+			{
+				arr();
+				for(var i=newArr.length-1;i>=0;i--)//这次是一堆添加 所以反而要从后往前来才能整体在前面
+				{
+					var addLi=document.createElement('li');
+					addLi.innerHTML=newArr[i];//添加柱图数字的地方
+					queue.insertBefore(addLi,queue.firstChild);//指定新加的li在列表的位置 
+				}
+				document.getElementById("input").value="";//消除对话框内容 这里可以写成left1.value 不过后面不行 格式一致麻烦点吧
+				newArr=[];
+			}
+			
+			function rightIn()
+			{
+				arr();
+				for(var i=0;i<newArr.length;i++)//这次是一堆添加 所以从前往后就可以加在最后
+				{
+					var addLi=document.createElement('li');
+					addLi.innerHTML=newArr[i];
+					queue.appendChild(addLi);//在列表的最后新加位置
+				}
+				document.getElementById("input").value="";
+				
+				newArr=[];
+			}
+			
+			
+			
+			function leftOut()
+			{
+				var left2=liList[0].innerHTML;
+				liList[0].remove();
+				alert("删除的元素："+left2);
+				document.getElementById("input").value="";
+			}
+			
+			function rightOut()
+			{
+				var right2=liList[liList.length-1].innerHTML;
+				liList[liList.length-1].remove();
+				alert("删除的元素："+right2);
+				document.getElementById("input").value="";
+			}
+			
+			function sort()
+			{//最简单的方法：自带的sort函数 不过要注意10在2前面所以
+				//注意liList[0]显示的是[ObjectHTMLElement]也就是不能直接比
+				//liList[0].innerHTML;要用这种形式
+				//有没不提取文件而是直接修改的？以后想想
+				var data=[];
+				for(var y=0;y<liList.length;y++)
+				{
+					data[y]=liList[y].innerHTML;
+				}
+				data=data.sort(function(a,b)
+				{
+					return a-b;
+				});
+				for(var z=0;z<liList.length;z++)
+				{
+					liList[z].innerHTML=data[z];
+				}
+				
+			}
+			
+			/*点击队列中任何一个元素，则该元素会被从队列中删除*/
+			queue.addEventListener("click",function(e)//要加点击事件的可以这样加
+			{
+				if(event.target.nodeName.toLowerCase()=="li")
+				{
+					queue.removeChild(event.target);
+				}
+			})
+		</script>
+	</body>
+</html>
