@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE JavaScript Task 07</title>
+		<style type="text/css">
+			.box{
+				display: flex;/*流体*/
+				justify-content: space-around;/*分散分布*/
+				background-color: #FFFFFF;
+				padding: 20px;
+				margin: 5px;
+				border: 2px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div class="box box-one">
+			<div class="box box-two">
+				<div class="box box-three">
+					<div class="box box-four"></div>
+					<div class="box box-five"></div>
+				</div>
+				
+				<div class="box box-six">
+					<div class="box box-seven"></div>
+					<div class="box box-eight"></div>
+				</div>
+			</div>
+			
+			<div class="box box-nine">
+				<div class="box box-ten">
+					<div class="box box-eleven"></div>
+					<div class="box box-twelve"></div>
+				</div>
+				
+				<div class="box box-thirteen">
+					<div class="box box-forteen"></div>
+					<div class="box box-fifteen"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="btn-wap">
+    		<button class="btn btn-primary btn-perOrder" type="button">前序</button>
+    		<button class="btn btn-primary btn-inOrder" type="button">中序</button>
+    		<button class="btn btn-primary btn-postOrder" type="button">后序</button>
+		</div>
+		
+		
+		
+		<script>
+			
+			
+			let root = document.querySelector('.box-one');//这里意思是从DOM选取元素 返回有.box-one这个类名的首个div 这次只有一个  注意这里给的是这个div的定位 类似.getElementById获取的东西
+			
+			function resetBackgroundColor(arr)//遍历所有节点都变一个色 跟下面写不到一块所以单独写
+        	{
+        		for(var i=0;i<arr.length;i++)
+        		{
+        			arr[i].style.backgroundColor="#FFF";//测试√是可以的
+        		}
+        	}
+			
+        	function time(arr,i)//根本问题在于某些方法想法很好 0.01秒arr[1]0.02秒arr[2]  1.01秒回复1.02秒回复 没意义啊
+        	{//因为只执行一次所以就用了嵌套循环
+        		let timer = setTimeout(function ()
+        			{
+        				if(i<=arr.length)
+        				{
+        					resetBackgroundColor(arr);
+        					arr[i].style.backgroundColor="#666";
+        					i++;
+        					time(arr,i);
+        				}
+        				else
+        				{
+        					resetBackgroundColor(arr);
+        					return;
+        				}
+        			},200);//等1s变回白色；结束
+        		
+        	}
+        	
+        	
+        	
+        	
+        	function getPreOrderArr(node,arr)//得到遍历的节点的arr       因为是嵌套循环所以单独拿出来写
+        	{
+        		if(node!==null)//node是节点的意思；第一个节点是root
+        		{
+        			arr.push(node);
+        			getPreOrderArr(node.firstElementChild,arr);
+        			getPreOrderArr(node.lastElementChild,arr);
+        		}
+        	}
+        	
+			document.querySelector('.btn-perOrder').onclick = function () 
+        	{
+        		var arr=[];
+            	getPreOrderArr(root,arr);//联动下面函数 结果是获得充满节点的arr
+        		resetBackgroundColor(arr);//先把全部背景变白再说
+        		let i=0;
+        		time(arr,i);
+        	};
+        	
+        	
+        	
+        	
+        	function getInOrderArr(node,arr)
+        	{
+        		if(node!==null)
+        		{
+        			getPreOrderArr(node.firstElementChild,arr);//注意这次循环之后以后全是前序了;当然你要从里到外就...
+        			arr.push(node);
+        			getPreOrderArr(node.lastElementChild,arr);
+        		}
+        	}
+        	document.querySelector('.btn-inOrder').onclick = function () 
+        	{
+        		var arr=[];
+            	getInOrderArr(root,arr);
+        		resetBackgroundColor(arr);
+        		let i=0;
+        		time(arr,i);
+        	};
+        	
+        	
+        	
+        	function getPostOrderArr(node,arr)
+        	{
+        		if(node!==null)
+        		{
+        			getPreOrderArr(node.firstElementChild,arr);//注意这次循环之后以后全是前序
+        			getPreOrderArr(node.lastElementChild,arr);
+        			arr.push(node);
+        		}
+        	}
+        	document.querySelector('.btn-postOrder').onclick = function () 
+        	{
+        		var arr=[];
+            	getPostOrderArr(root,arr);
+        		resetBackgroundColor(arr);
+        		let i=0;
+        		time(arr,i);
+        	};
+        	
+		</script>
+		
+	</body>
+</html>
