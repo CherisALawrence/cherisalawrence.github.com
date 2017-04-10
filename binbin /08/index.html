@@ -1,1 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE JavaScript Task 08</title>
+		<style type="text/css">
+			.box{
+				display: flex;/*流体*/
+				justify-content: space-around;/*分散分布*/
+				background-color: #a9a9a9;
+				padding: 8px;
+				margin: 5px;
+				border: 2px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div class="box box-one">6
+			<div class="box box-2">2
+				<div class="box box-3">3
+					<div class="box box-4">4</div>
+					<div class="box box-5">5</div>
+					<div class="box box-6">6</div>
+					<div class="box box-7">7</div>
+				</div>
+				
+				<div class="box box-8">
+					<div class="box box-9">9</div>
+					<div class="box box-10">10</div>
+					<div class="box box-11">11</div>
+					<div class="box box-12">12</div>
+				</div>
+				
+				<div class="box box-13">
+					<div class="box box-14">14</div>
+					<div class="box box-15">15</div>
+					<div class="box box-16">16</div>
+					<div class="box box-17">17</div>
+				</div>
+			</div>
+			
+			<div class="box box-18">
+				<div class="box box-19">
+					<div class="box box-20">20</div>
+					<div class="box box-21">21</div>
+					<div class="box box-22">22</div>
+					<div class="box box-23">23</div>
+				</div>
+				
+				<div class="box box-24">
+					<div class="box box-25">25</div>
+					<div class="box box-26">26</div>
+					<div class="box box-27">27</div>
+					<div class="box box-28">28</div>
+				</div>
+				
+				<div class="box box-29">
+					<div class="box box-30">30</div>
+					<div class="box box-31">6</div>
+					<div class="box box-32">6</div>
+					<div class="box box-33">6</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="btn-wap">
+			<input type="text" id="input" value="" />
+    		<button class="btn btn-primary btn-perOrder" type="button">遍历/查找</button>
+    		<button class="btn btn-primary btn-search" type="button">测试</button>
+		</div>
+		
+		
+		
+		<script>
+			
+			
+			let root = document.querySelector('.box-one');//注意是element的节点
+			
+			function resetBackgroundColor(arr)//遍历所有节点都变一个色
+        	{
+        		for(let i=0;i<arr.length;i++)
+        		{
+        			arr[i].style.backgroundColor="#FFF";
+        		}
+        	}
+			
+        	function time(arr,i,value)
+        	{//因为只执行一次所以就用了嵌套循环
+        		let timer = setTimeout(function ()
+        			{
+        				if(i===0)
+        				{
+        					resetBackgroundColor(arr);
+        				}
+        				if(i>0&&i<=arr.length)
+        				{
+        					if(arr[i-1].style.backgroundColor != "red")//如果不是需要的就还原
+        					{
+        						arr[i-1].style.backgroundColor="#FFF";
+        					}
+        				}
+        				if(i>=0&&i<arr.length)
+        				{
+        					arr[i].style.backgroundColor="#666";
+        					if(arr[i].firstChild.nodeValue.indexOf(value) != -1&&arr[i].firstChild.nodeValue.replace(/(^\s*)|(\s*$)/g,'') !=="")//.indexOf（x）看是否包含x 分大小写 另外nodeValue获取的值看起来很像正常数但有奇怪符号 去掉就可以了
+        					{
+        						arr[i].style.backgroundColor="red";//是就覆盖
+        					}
+        				}
+        				if(i>=arr.length)
+        				{
+        					return;
+        				}
+        				
+        					i++;
+        					time(arr,i,value);//讽刺了不要瞎jb改条件忘了更新
+        				
+        			},200);//等1s变回白色；结束
+        		
+        	}
+        	//let和var: let用法更规范 只限制在一块区域内	var没理解错的话在这之下所有都用到	可能会冲突
+        	
+        	//节点属性：children和childNodes区别：
+        	
+        	//childNodes：它是标准属性，它返回指定元素的子元素集合，包括HTML节点，所有属性，文本节点。
+			//可以通过nodeType来判断是哪种类型的节点，只有当nodeType==1时才是元素节点，2是属性节点，3是文本节点。
+			//children：非标准属性，它返回指定元素的子元素集合。
+			//但它只返回HTML节点，甚至不返回文本节点，虽然不是标准的DOM属性，但它和innerHTML方法一样，得到了几乎所有浏览器的支持。
+			//个人理解
+        	//childNodes:该节点下所有子节点		可以写childNodes.length什么的		以及childNodes[0]等等
+        	//children：只返回类型为element的子节点？更方便
+        	
+        	//node.firstElementChild		node和element：NodeType==1的node类型才是element
+        	//node.childElementCount:元素子节点数量		当然也可以写成node.children.length 大概
+        	
+        	function getPreOrderArr(node,arr)//得到遍历的节点的arr       因为是嵌套循环所以单独拿出来写
+        	{
+        		if(node!==null)//node是节点的意思；第一个节点是root
+        		{
+        			arr.push(node);
+        			for(let i=0;i<node.childElementCount;i++)
+        			{
+        				getPreOrderArr(node.children[i],arr);//node[i].children	X		node.children[i]	√
+        			}
+        		}
+        	}
+        	
+			document.querySelector('.btn-perOrder').onclick = function () 
+        	{
+        		var arr=[];
+            	getPreOrderArr(root,arr);//联动下面函数 结果是获得充满节点的arr
+        		resetBackgroundColor(arr);//先把全部背景变白再说
+        		let i=0;
+        		let value=document.getElementById("input").value;
+        		time(arr,i,value);
+        		//if(document.getElementById("input").value!=="")
+        		//{
+        		//	for(let i=0;i<arr.length;i++)
+        		//	{
+        		//		alert(arr[i].childNodes[0].nodeValue);
+        		//	}
+        			//alert(document.getElementById("input").value);
+        		//}
+        	};
+        	
+        	
+        	
+        	
+        	//nodeValue指的是节点的值		value指的是元素节点中的value属性
+        	
+        	//关于nodeValue
+        	//有个细节必须注意：在用nodeValue属性获取description对象的值时，得到的并不是包含在这个段落里的文本。
+        	//alert(description.nodeValue);
+        	//<p id = "description">1234567890</p>
+        	//这个调用将返回一个null值。<p>元素本身的nodeValue属性是一个空值，而你真正需要的是<p>元素所包含的文本的值。
+        	//包含在<p>元素里的文本是另一种节点，它是<p>元素的第一个子节点。因此，你想要得到的其实是它的第一个子节点的nodeValue属性值。
+        	//alert(description.childNodes[0].nodeValue);
+        	//这个值来自childNodes数组的第一个（下标是0）元素。
+        	
+        	
+        	document.querySelector('.btn-search').onclick = function ()//测试用
+        	{
+        		//alert("root:  "+root);//[object HTMLDivElement]
+        		//alert("root.value:  "+root.value);//undefined
+        		//alert("root.nodeValue:  "+root.nodeValue);//null
+        		//alert("root.firstChild.nodeValue:  "+root.firstChild.nodeValue);//1(也就是正确的根值但格式奇怪)
+        		///alert("root.firstChild.nodeValue跟1比较(看起来是1):  "+root.firstChild.nodeValue===1);
+        		//alert(root.firstChild.nodeValue.indexOf(6));//0,也就是1次
+        		//alert("root.innerHTML:"+root.innerHTML);
+        		//alert("root.innerHTML:"+root.innerText[0]);//虽然只是值 但是全部值 依旧没有帮助 
+        		//alert(root.firstElementChild.firstElementChild.firstElementChild.innerHTML);
+            	
+            	
+        	}
+        	
+		</script>
+		
+	</body>
+</html>
 
