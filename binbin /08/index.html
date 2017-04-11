@@ -66,8 +66,12 @@
 		
 		<div class="btn-wap">
 			<input type="text" id="input" value="" />
-    		<button class="btn btn-primary btn-perOrder" type="button">遍历</button>
-    		<button class="btn btn-primary btn-search" type="button">查找</button>
+    		<button class="btn btn-primary btn-perOrder" type="button">先序遍历</button>
+    		<button class="btn btn-primary btn-BreadthFirstSearch" type="button">层序遍历</button>
+    		<button class="btn btn-primary btn-postOrder" type="button">后序遍历</button>
+    		<button class="btn btn-primary btn-Presearch" type="button">先序查找</button>
+    		<button class="btn btn-primary btn-BFSearch" type="button">层序查找</button>
+    		<button class="btn btn-primary btn-Postsearch" type="button">后序查找</button>
 		</div>
 		
 		
@@ -173,6 +177,10 @@
         			},200);//等1s变回白色；结束
         		
         	}
+        	
+        	
+        	
+        	
         	function getPreOrderArr(node,arr)//得到遍历的节点的arr       因为是嵌套循环所以单独拿出来写
         	{
         		if(node!==null)//node是节点的意思；第一个节点是root
@@ -185,6 +193,40 @@
         		}
         	}
         	
+        	
+        	function getBreadthFirstSearch(node,arr)
+        	{
+        		if(node!==null)//root节点加在前面
+        		{
+        			for(let i=0;i<node.childElementCount;i++)
+        			{
+        				arr.push(node.children[i]);
+        			}
+        			for(let j=0;j<node.childElementCount;j++)
+        			{
+        				getPreOrderArr(node.children[j],arr);
+        			}
+        		}
+        	}
+        	
+        	
+        	function getPostOrderArr(node,arr)
+        	{
+        		if(node!==null)
+        		{
+        			
+        			for(let i=0;i<node.childElementCount;i++)
+        			{
+        				getPreOrderArr(node.children[i],arr);
+        			}
+        			arr.push(node);
+        		}
+        	}
+        	
+        	
+        	
+        	
+        	
 			document.querySelector('.btn-perOrder').onclick = function () 
         	{
         		let arr=[];
@@ -194,16 +236,35 @@
         		time(arr,i);
         	};
         	
-        	
-        	
-        	document.querySelector('.btn-search').onclick = function ()
+			document.querySelector('.btn-BreadthFirstSearch').onclick = function () 
         	{
-        			let value=document.getElementById("input").value;
+        		let arr=[];
+        		arr.push(root);
+            	getBreadthFirstSearch(root,arr);
+        		resetBackgroundColor(arr);
+        		let i=0;
+        		time(arr,i);
+        	};
+        	
+			document.querySelector('.btn-postOrder').onclick = function () 
+        	{
+        		let arr=[];
+            	getPostOrderArr(root,arr);
+        		resetBackgroundColor(arr);
+        		let i=0;
+        		time(arr,i);
+        	};
+        	
+        	
+        	
+        	document.querySelector('.btn-Presearch').onclick = function ()
+        	{
+        		let value=document.getElementById("input").value;
         		if(value!=="")
         		{
         			let arr2=[];
-        			getPreOrderArr(root,arr2);//联动下面函数 结果是获得充满节点的arr
-        			resetBackgroundColor(arr2);//先把全部背景变白再说
+        			getPreOrderArr(root,arr2);
+        			resetBackgroundColor(arr2);
         			let j=0;
         			time2(arr2,j,value);
         		}
@@ -211,12 +272,46 @@
         		{
         			alert("Please input first");
         		}
-        		
+        	}
+        	
+        	
+        	document.querySelector('.btn-BFSearch').onclick = function ()
+        	{
+        		let value=document.getElementById("input").value;
+        		if(value!=="")
+        		{
+        			let arr2=[];
+        			arr2.push(root);
+        			getBreadthFirstSearch(root,arr2);
+        			resetBackgroundColor(arr2);
+        			let j=0;
+        			time2(arr2,j,value);
+        		}
+        		else
+        		{
+        			alert("Please input first");
+        		}
+        	}
+        	
+        	
+        	document.querySelector('.btn-Postsearch').onclick = function ()
+        	{
+        		let value=document.getElementById("input").value;
+        		if(value!=="")
+        		{
+        			let arr2=[];
+        			getPostOrderArr(root,arr2);
+        			resetBackgroundColor(arr2);
+        			let j=0;
+        			time2(arr2,j,value);
+        		}
+        		else
+        		{
+        			alert("Please input first");
+        		}
         	}
         	
 		</script>
 		
 	</body>
 </html>
-
-
