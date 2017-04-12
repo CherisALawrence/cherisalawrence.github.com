@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE JavaScript Task 09</title>
+		<style type="text/css">
+			.box{
+				display: flex;/*不需要一定是display方块才可以 flex也行*/
+				justify-content: space-around;/*分散分布*/
+				background-color: white;
+				padding: 8px;
+				margin: 5px;
+				border: 2px solid #000;
+			}
+			.box:focus{
+				display: flex;
+				justify-content: space-around;/*分散分布*/
+				background-color: yellow;
+				padding: 8px;
+				margin: 5px;
+				border: 2px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div class="box box-one">6
+			<div class="box box-2">2
+				<div class="box box-3">3
+					<div class="box box-4">4</div>
+					<div class="box box-5">5</div>
+					<div class="box box-6">6</div>
+					<div class="box box-7">7</div>
+				</div>
+				
+				<div class="box box-8">
+					<div class="box box-9">9</div>
+					<div class="box box-10">10</div>
+					<div class="box box-11">11</div>
+					<div class="box box-12">12</div>
+				</div>
+				
+				<div class="box box-13">
+					<div class="box box-14">14</div>
+					<div class="box box-15">15</div>
+					<div class="box box-16">16</div>
+					<div class="box box-17">17</div>
+				</div>
+			</div>
+			
+			<div class="box box-18">
+				<div class="box box-19">
+					<div class="box box-20">20</div>
+					<div class="box box-21">21</div>
+					<div class="box box-22">22</div>
+					<div class="box box-23">23</div>
+				</div>
+				
+				<div class="box box-24">
+					<div class="box box-25">25</div>
+					<div class="box box-26">26</div>
+					<div class="box box-27">27</div>
+					<div class="box box-28">28</div>
+				</div>
+				
+				<div class="box box-29">
+					<div class="box box-30">30</div>
+					<div class="box box-31">6</div>
+					<div class="box box-32">6</div>
+					<div class="box box-33">6</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="btn-wap">
+			<input type="text" id="input" value="" />
+    		<button class="btn btn-primary btn-perOrder" type="button">先序遍历</button>
+    		<button class="btn btn-primary btn-BreadthFirstSearch" type="button">层序遍历</button>
+    		<button class="btn btn-primary btn-postOrder" type="button">后序遍历</button>
+    		<button class="btn btn-primary btn-Presearch" type="button">先序查找</button>
+    		<button class="btn btn-primary btn-BFSearch" type="button">层序查找</button>
+    		<button class="btn btn-primary btn-Postsearch" type="button">后序查找</button>
+		</div>
+		<div class="btn-wap">
+			<input type="text" id="input2" value="" />
+    		<button class="btn btn-primary btn-deleteNode" type="button">删除</button>
+    		<button class="btn btn-primary btn-addNode" type="button">添加</button>
+    		<button class="btn btn-primary btn-clearNodeTarget" type="button">取消锁定</button>
+		</div>
+		
+		
+		
+		<script>
+			
+			let root = document.querySelector('.box-one');//注意是element的节点
+			
+			function resetBackgroundColor(arr)//遍历所有节点都变一个色
+        	{
+        		for(let i=0;i<arr.length;i++)
+        		{
+        			arr[i].style.backgroundColor="#FFF";
+        		}
+        	}
+			
+        	function time(arr,i)
+        	{//因为只执行一次所以就用了嵌套循环
+        		let timer = setTimeout(function ()
+        			{
+        				if(i===0)
+        				{
+        					resetBackgroundColor(arr);
+        					arr[i].style.backgroundColor="#666";
+        				}
+        				if(i>0&&i<=arr.length)
+        				{
+        					arr[i-1].style.backgroundColor="#FFF";
+        					arr[i].style.backgroundColor="#666";
+        				}
+        				if(i>=arr.length)
+        				{
+        					arr[i-1].style.backgroundColor="#FFF";
+        					return;
+        				}
+        					i++;
+        					time(arr,i);
+        			},200);
+        		
+        	}
+        	
+        	function time2(arr,i,value)
+        	{//因为只执行一次所以就用了嵌套循环
+        		let timer = setTimeout(function ()
+        			{
+        				if(i===0)
+        				{
+        					resetBackgroundColor(arr);
+        				}
+        				if(i>0&&i<=arr.length)
+        				{
+        					if(arr[i-1].style.backgroundColor != "red")//如果不是需要的就还原
+        					{
+        						arr[i-1].style.backgroundColor="#FFF";
+        					}
+        				}
+        				if(i>=0&&i<arr.length)
+        				{
+        					arr[i].style.backgroundColor="#666";
+        					if(arr[i].firstChild.nodeValue.indexOf(value) != -1&&arr[i].firstChild.nodeValue.replace(/(^\s*)|(\s*$)/g,'') !=="")//.indexOf（x）举例来说就是 看26是否包含6  分大小写  另外nodeValue获取的值看起来很像正常数但有奇怪符号 去掉就可以了
+        					{
+        						arr[i].style.backgroundColor="red";//是就覆盖
+        					}
+        				}
+        				if(i>=arr.length)
+        				{
+        					return;
+        				}
+        				
+        					i++;
+        					time2(arr,i,value);//讽刺了不要瞎jb改条件忘了更新
+        				
+        			},200);//等1s变回白色；结束
+        		
+        	}
+        	
+        	
+        	
+        	
+        	function getPreOrderArr(node,arr)//得到遍历的节点的arr       因为是嵌套循环所以单独拿出来写
+        	{
+        		if(node!==null)//node是节点的意思；第一个节点是root
+        		{
+        			arr.push(node);
+        			for(let i=0;i<node.childElementCount;i++)
+        			{
+        				getPreOrderArr(node.children[i],arr);//node[i].children	X		node.children[i]	√
+        			}
+        		}
+        	}
+        	
+        	
+        	function getBreadthFirstSearch(node,arr)
+        	{
+        		if(node!==null)//root节点加在前面
+        		{
+        			for(let i=0;i<node.childElementCount;i++)
+        			{
+        				arr.push(node.children[i]);
+        			}
+        			for(let j=0;j<node.childElementCount;j++)
+        			{
+        				getPreOrderArr(node.children[j],arr);
+        			}
+        		}
+        	}
+        	
+        	
+        	function getPostOrderArr(node,arr)
+        	{
+        		if(node!==null)
+        		{
+        			
+        			for(let i=0;i<node.childElementCount;i++)
+        			{
+        				getPreOrderArr(node.children[i],arr);
+        			}
+        			arr.push(node);
+        		}
+        	}
+        	
+        	
+        	
+        	
+        	
+			document.querySelector('.btn-perOrder').onclick = function () 
+        	{
+        		let arr=[];
+            	getPreOrderArr(root,arr);//联动下面函数 结果是获得充满节点的arr
+        		resetBackgroundColor(arr);//先把全部背景变白再说
+        		let i=0;
+        		time(arr,i);
+        	};
+        	
+			document.querySelector('.btn-BreadthFirstSearch').onclick = function () 
+        	{
+        		let arr=[];
+        		arr.push(root);
+            	getBreadthFirstSearch(root,arr);
+        		resetBackgroundColor(arr);
+        		let i=0;
+        		time(arr,i);
+        	};
+        	
+			document.querySelector('.btn-postOrder').onclick = function () 
+        	{
+        		let arr=[];
+            	getPostOrderArr(root,arr);
+        		resetBackgroundColor(arr);
+        		let i=0;
+        		time(arr,i);
+        	};
+        	
+        	
+        	
+        	document.querySelector('.btn-Presearch').onclick = function ()
+        	{
+        		let value=document.getElementById("input").value;
+        		if(value!=="")
+        		{
+        			let arr2=[];
+        			getPreOrderArr(root,arr2);
+        			resetBackgroundColor(arr2);
+        			let j=0;
+        			time2(arr2,j,value);
+        		}
+        		else
+        		{
+        			alert("Please input first");
+        		}
+        	}
+        	
+        	
+        	document.querySelector('.btn-BFSearch').onclick = function ()
+        	{
+        		let value=document.getElementById("input").value;
+        		if(value!=="")
+        		{
+        			let arr2=[];
+        			arr2.push(root);
+        			getBreadthFirstSearch(root,arr2);
+        			resetBackgroundColor(arr2);
+        			let j=0;
+        			time2(arr2,j,value);
+        		}
+        		else
+        		{
+        			alert("Please input first");
+        		}
+        	}
+        	
+        	
+        	document.querySelector('.btn-Postsearch').onclick = function ()
+        	{
+        		let value=document.getElementById("input").value;
+        		if(value!=="")
+        		{
+        			let arr2=[];
+        			getPostOrderArr(root,arr2);
+        			resetBackgroundColor(arr2);
+        			let j=0;
+        			time2(arr2,j,value);
+        		}
+        		else
+        		{
+        			alert("Please input first");
+        		}
+        	}
+			/*EventTarget.addEventListener()：js 添加事件
+			
+			一般在JS中添加事件,是这样子的
+			obj.onclick=method；
+			但如果一个元素上添加多次同一事件
+			obj.onclick=method1;
+			obj.onclick=method2;
+			obj.onclick=method3;如果这样写,那么只有最后绑定的事件,这里是method3会被执行,这个时候我们就不能用onclick这样的写法了
+			
+				W3C标准的addEventListener方法：				
+				//element.addEventListener(type,listener[,useCapture]);
+				文档节点.addEventListener方法(字符串/事件名称比如“click”,	接口或者是函数,	是否使用捕捉一般用 false);
+			btn1Obj.addEventListener("click",method1[,false]);
+			btn1Obj.addEventListener("click",method2[,false]);
+			btn1Obj.addEventListener("click",method3[,false]);
+			执行顺序为method1->method2->method3
+			*/
+			
+			let targetNode="";
+			//root是element的节点
+			root.addEventListener("click",function(e)//点击就能选中
+			{//节点.addElementListener方法	对节点包含的比如div里的div也可行
+				if(event.target.nodeName.toLowerCase()=="div")//返回节点名称
+				{
+//					event.target.parentNode.removeChild(event.target);
+					targetNode=event.target;
+					let arr=[];					//这三行只是一个意思 去掉选中产生的画面效果
+            		getPreOrderArr(root,arr);	//
+        			resetBackgroundColor(arr);	//
+					targetNode.style.backgroundColor="#666";//特殊标记
+				}
+			});
+			
+			document.querySelector('.btn-deleteNode').onclick = function ()//删除子节点
+			{
+				if(targetNode!=="")
+				{
+					targetNode.parentNode.removeChild(targetNode);	//1.Node.removeChild(node)可以直接删所有子节点
+																	//	删除节点，在要删除节点的父节点上操作
+																	//root.removeChild(targetNode);不行 因为不是直系子节点
+					//targetNode.remove()  							//2.Node.remove()  用于删除当前节点 另一个写法
+				}
+			}
+			
+			document.querySelector('.btn-addNode').onclick = function ()//添加子节点
+			{
+				let value2=document.getElementById("input2").value;
+				if(targetNode!==""&&value2!=="")//
+				{
+					targetNode.insertAdjacentHTML('beforeEnd',"<div class=\"box\">"+value2+"</div>");
+				}//Element.insertAdjacentHTML('beforeEnd', html代码); // 在该元素最后一个子元素后面插入 
+				//改变上面代码'beforeEnd'变成'afterEnd'就可以在该元素后插入；还有其他的等等
+			}
+			
+			document.querySelector('.btn-clearNodeTarget').onclick = function ()//取消选择
+			{
+				targetNode="";
+				let arr=[];					//这三行只是一个意思 去掉选中产生的画面效果
+            	getPreOrderArr(root,arr);	//
+        		resetBackgroundColor(arr);	//
+			}
+		</script>
+		
+	</body>
+</html>
+<!--
+Element.focus()   //用于将当前页面的焦点，转移到指定元素上
+-->
+	
+
