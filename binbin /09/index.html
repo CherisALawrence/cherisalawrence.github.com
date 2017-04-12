@@ -320,7 +320,7 @@
 				{
 //					event.target.parentNode.removeChild(event.target);
 					targetNode=event.target;
-					let arr=[];					//这三行只是一个意思 去掉选中产生的画面效果
+					let arr=[];					//这三行是为了表达一个意思 去掉选中产生的画面效果
             		getPreOrderArr(root,arr);	//
         			resetBackgroundColor(arr);	//
 					targetNode.style.backgroundColor="#666";//特殊标记
@@ -334,24 +334,45 @@
 					targetNode.parentNode.removeChild(targetNode);	//1.Node.removeChild(node)可以直接删所有子节点
 																	//	删除节点，在要删除节点的父节点上操作
 																	//root.removeChild(targetNode);不行 因为不是直系子节点
-					//targetNode.remove()  							//2.Node.remove()  用于删除当前节点 另一个写法
+					//targetNode.remove()  							//2.Node.remove()  用于删除当前节点 这是另一个可行的写法
+				}
+				else
+				{
+					alert("请选择一个节点");
 				}
 			}
-			
+//<!--
+//Element.focus()   //用于将当前页面的焦点，转移到指定元素上  可以靠这个实现focus直接聚焦而不是这么复杂吗?待测试
+//-->
 			document.querySelector('.btn-addNode').onclick = function ()//添加子节点
 			{
 				let value2=document.getElementById("input2").value;
 				if(targetNode!==""&&value2!=="")//
 				{
-					targetNode.insertAdjacentHTML('beforeEnd',"<div class=\"box\">"+value2+"</div>");
-				}//Element.insertAdjacentHTML('beforeEnd', html代码); // 在该元素最后一个子元素后面插入 
-				//改变上面代码'beforeEnd'变成'afterEnd'就可以在该元素后插入；还有其他的等等
+					targetNode.insertAdjacentHTML('beforeEnd',"<div class=\"box\">"+value2+"</div>");//好处在于添加标签同时添加class
+					//Element.insertAdjacentHTML('beforeEnd', html代码); // 在该元素最后一个子元素后面插入
+					//改变上面代码'beforeEnd'变成'afterEnd'就可以在该元素后插入；还有其他的等等
+					
+					//另一个简单的不需要手打innerHTML的好方法，前提是你的div的样式不是由div中某个class控制的；不然很容易没有边框什么的
+					//var div = document.createElement("div");
+					//div.innerText = value2;
+					//targetNode.appendChild(div);
+				}
+				else if(targetNode==="")
+				{
+					alert("请选择一个节点");
+				}
+				else if(value2==="")
+				{
+					alert("请输入节点的文本");
+				}
+				
 			}
 			
-			document.querySelector('.btn-clearNodeTarget').onclick = function ()//取消选择
+			document.querySelector('.btn-clearNodeTarget').onclick = function ()//取消节点选择
 			{
 				targetNode="";
-				let arr=[];					//这三行只是一个意思 去掉选中产生的画面效果
+				let arr=[];					//这三行是为了表达一个意思 去掉选中产生的画面效果
             	getPreOrderArr(root,arr);	//
         		resetBackgroundColor(arr);	//
 			}
@@ -359,8 +380,5 @@
 		
 	</body>
 </html>
-<!--
-Element.focus()   //用于将当前页面的焦点，转移到指定元素上
--->
 	
 
