@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE HTML Task 01</title>
+	</head>
+	<body>
+		<div>
+			<h1>网站一级标题</h1>
+			<ul>
+				<li><a href="#">导航链接1</a></li>
+				<li><a href="#">导航链接2</a></li>
+				<li><a href="#">导航链接3</a></li>
+				<!--不是herf-->
+			</ul>
+			<h3>文章一级标题</h3>
+			<h3>文章二级标题</h3>
+			<p>文章作者 发表时间</p>
+			<p>这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落</p>
+			<p>
+				这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落，换行了<br />这是一个很长的段落这是一个很长的段落这是一个很长的段落
+				<!--并没有换行 不用br的话 这里只是看的方便-->
+				<a href="http://ife.baidu.com/">这里有一个链接连到http://ife.baidu.com</a>
+				这是一个很长的段落这是一个很长的段落这是一个很长的段落，<strong>这里有粗体字</strong>这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落
+				<br />
+				<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+				<br />
+				这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落
+				<a href="http://ife.baidu.com/"target="_blank">这里有一个链接打开后跳出新窗口连到http://ife.baidu.com</a>
+			</p>
+			<h3>最后一篇文章一级标题</h3>
+			<h3>文章二级标题</h3>
+			<p>文章作者 发表时间</p>
+			<ol>
+				<li>排名1</li>
+				<li>排名2</li>
+				<li>排名3</li>
+			</ol>
+			<p>下面是一个表格 给表格加了border="1"好让你看出这是一个表格</p>
+<!--table表标签
+table、tbody、tr、th、td
+1、<table>…</table>：整个表格以<table>标记开始、</table>标记结束。
+2、<tbody>…</tbody>：当表格内容非常多时，表格会下载一点显示一点，但如果加上<tbody>标签后，这个表格就要等表格内容全部下载完才会显示。如右侧代码编辑器中的代码。
+3、<tr>…</tr>：表格的一行，所以有几对tr 表格就有几行。
+4、<td>…</td>：表格的一个单元格，一行中包含几对<td>...</td>，说明一行中就有几列。
+5、<th>…</th>：表格的头部的一个单元格，表格表头。
+6、表格中列的个数，取决于一行中数据单元格的个数。
+-->
+			<table border="1">
+				<tbody>
+					<tr>
+						<th>表头</th>
+						<th>表头</th>
+						<th>表头</th>
+					</tr>
+					<tr>
+						<td>表内容单元格</td>
+						<td>表内容单元格</td>
+						<td><a href="#">操作</a></td>
+					</tr>
+					<tr>
+						<td>表内容单元格</td>
+						<td>表内容单元格</td>
+						<td><a href="#">操作</a></td>
+					</tr>
+					<tr>
+						<td>总计</td>
+						<td>1000</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<!--sidebar-->
+		<div>
+			<h1>以后是一个侧栏 这是侧栏的标题</h1>
+			<h3>侧栏注册窗口标题</h3>
+			<!--form表单是可以把浏览者输入的数据传送到服务器端，这样服务器端程序就可以处理表单传过来的数据
+				语法<form   method="传送方式"   action="服务器文件">
+				1、所有表单控件（文本框、文本域、按钮、单选框、复选框等）都必须放在 <form></form> 标签之间（否则用户输入的信息可提交不到服务器上哦！）。
+				2、method : post/get 的区别这一部分内容属于后端程序员考虑的问题。感兴趣的小伙伴可以查看本小节的 wiki，里面有详细介绍。
+			-->
+			<form>
+				<!--label标签不会向用户呈现任何特殊效果，它的作用是为鼠标用户改进了可用性。如果你在 label 标签内点击文本，就会触发此控件。就是说，当用户单击选中该label标签时，浏览器就会自动将焦点转到和标签相关的表单控件上（就自动选中和该label标签相关连的表单控件上）。-->
+				<label for="username">用户名:</label>
+				<input type="text" id="username" value="" />
+				<label for="pass">密码:</label>
+				<input type="password" id="pass" value="" />    
+				<button type="submit">确定</button>
+				<button type="reset">重置</button>
+				<label>性别:</label>
+				<input type="radio" name="单选框1" checked="checked" value="男"/>男
+				<input type="radio" name="单选框1" value="女"/>女
+				<!--radio是单选 checkbox是多选 checked="checked"表示默认被选中-->
+				<label>爱好:</label>
+				<input type="checkbox" name="复选框1" checked="checked"/>运动
+				<input type="checkbox" name="复选框1"/>游戏
+				<input type="checkbox" name="复选框1"/>乐器
+				<label>城市:</label>
+				<select>
+      				<option value="1">北京</option>
+      				<option value="2">上海</option>
+      				<option value="3">xx</option>
+      				<option value="4">yy</option>
+    		</select>
+				<label>描述:</label>
+				<!--	<textarea  rows="行数" cols="列数">文本</textarea>		-->
+				<textarea value="这是一个多选输入框">文本</textarea>
+				<input   type="submit"   value="提交">
+			</form>  
+		</div>
+	</body>
+</html>
+<!--
+	css
+    font-size:12px;字体
+    color:#930;字体颜色
+    text-align:center;字体居中对齐
+
+想加入一行代码吗？使用<code>标签
+<code>{background-image:linear-gradient(left, red 100px, yellow 200px);}</code>
+-->
