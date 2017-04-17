@@ -1,0 +1,88 @@
+<!--首行缩进两个字符：text-intent:2em-->
+<!--img标签与div层之间会有空隙
+解决方法：使用display:block就可以消除-->
+<!--
+	关于三栏问题：我的解决办法是浮动元素在上，Middle也就是中间不定宽度的放在最后。
+	关于float元素超出框：用overflow: auto;或者clear：right；(如果右边有浮动元素就一直下移 直到没有float在右边出现)
+	有特殊需要的时候 可以试试display：table；在head first 544页左右
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE HTML Task 03</title>
+		<style>
+			* {margin: 0; padding: 0;}
+			/*去除浏览器效果*/
+			.container,.left,.middle,.right
+			{
+				/*在这里加width100%会超出 不知道为什么*/
+				overflow: auto;
+				text-align:center;
+				margin:20px;
+				padding:20px;
+				background-color: #eeeeee;
+				border: 1px solid #999;
+			}
+			.left
+			{
+				float: left;
+				width:200px;
+				display: inline;
+			}
+			.left img
+			{
+				float: left;
+				width:80px;
+				height:80px;
+				margin:20px 0px;
+				background-color: #eeeeee;
+				border: 1px solid #999;
+			}
+			.left p
+			{
+				text-align:center;
+			}
+			.middle
+			{
+				width: screen -320px;
+			}
+			.right
+			{
+				float: right;
+				width:120px;
+			}
+			.right img
+			{
+				text-align:center;
+				width:80px;
+				height:80px;
+				margin-top:20px;
+				margin-bottom: 20px;
+				background-color: #eeeeee;
+				border: 1px solid #999;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="left">
+				<div class="logo-team">
+					<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+					<p>团队logo</p>
+				</div>
+			</div>
+			
+			<div class="right">
+					<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+					<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+					<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+					<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+			</div>
+			<div class="middle">
+				<p>这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落</p>
+			</div>
+			
+		</div>
+	</body>
+</html>
