@@ -58,7 +58,7 @@
 			
 			
 			
-			div
+			.container
 			{
 				margin:20px;/*外边距*/
 				padding:20px;/*内边距*/
@@ -112,15 +112,21 @@
 			
 			table
 			{
+				border-collapse: collapse;
+				/*去掉table表格的间隔；当然自己设定的border还是有的*/
 				width: 100%;
-				border:1px  solid  white;
+				/*border:1px  solid  gray;*/
+				/*table设置的border只是table四周 中间还是没有border*/
 				box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
 			}
 			table th
 			{
 				background: rgba(0, 0, 0, 0.8);
 				color: white;
-				
+			}
+			table td
+			{
+				border:1px  solid  #C0C0C0;
 			}
 			table .last-tr
 			{
@@ -132,10 +138,35 @@
 				/*vertical-align: middle; 这句没有用啊*/
 				text-align:center;
 			}
-			.1
+			.main
 			{
-				left: 20em;
-				/*em不用担心字体大小；是半个汉字的长度*/
+				width: 100% ;
+    			line-height: 2em;/*em不用担心字体大小；是半个汉字的长度*/
+    			display: flex;/*不然会造成虽然40%和60%但一个在上一个在下*/
+				
+			}
+			.main .left
+			{
+				text-align:right;
+				width: 40% ;
+			}
+			.main .right
+			{
+				text-align:left;
+				/*这样就能实现一行文字中间定点对齐*/
+				width: 60% ;
+			}
+			#submit
+			{
+				
+				font-size: 24px;
+				color: white;
+				text-align:center;
+				width: 90% ;
+				height:2em;
+				border-radius: 15px;
+				/*图片的边角变化*/
+				background-color:cornflowerblue ;
 			}
 		</style>
 	</head>
@@ -381,7 +412,7 @@ table、tbody、tr、th、td
 		</div>
 		
 		<!--sidebar-->
-		<div class="sidebar">
+		<div class="sidebar container">
 			<h1>以后是一个侧栏 这是侧栏的标题</h1>
 			<h3>侧栏注册窗口标题</h3>
 			<!--form表单是可以把浏览者输入的数据传送到服务器端，这样服务器端程序就可以处理表单传过来的数据
@@ -391,40 +422,65 @@ table、tbody、tr、th、td
 			-->
 			<form>
 				<!--label标签不会向用户呈现任何特殊效果，它的作用是为鼠标用户改进了可用性。如果你在 label 标签内点击文本，就会触发此控件。就是说，当用户单击选中该label标签时，浏览器就会自动将焦点转到和标签相关的表单控件上（就自动选中和该label标签相关连的表单控件上）。-->
-				<label for="username" class="1">用户名:</label>
-				<input type="text" id="username" value="" /><br />
-				<label for="pass">密码:</label>
-				<input type="password" id="pass" value="" /><br />
-				<label for="pass2">请重复输入密码:</label>
-				<input type="password" id="pass2" value="" /><br />
-				<label>性别:</label>
-				<input type="radio" name="单选框1" checked="checked" value="男"/>男
-				<input type="radio" name="单选框1" value="女"/>女
-				<br />
+				<div class="main">
+					<div class="left" ><label for="username" class="1">用户名:</label></div>
+					<div class="right"><input type="text" id="username" value="" /><br /></div>
+				</div>
+				
+				<div class="main">
+					<div class="left" ><label for="pass">密码:</label></div>
+					<div class="right"><input type="password" id="pass" value="" /><br /></div>
+				</div>
+				
+				<div class="main">
+					<div class="left" ><label for="pass2">请重复输入密码:</label></div>
+					<div class="right"><input type="password" id="pass2" value="" /><br /></div>
+				</div>
+				
+				<div class="main">
+					<div class="left" ><label>性别:</label></div>
+					<div class="right">
+						<input type="radio" name="单选框1" checked="checked" value="男"/>男
+						<input type="radio" name="单选框1" value="女"/>女
+					</div>
+				</div>
+				
 				<!--radio是单选 checkbox是多选 checked="checked"表示默认被选中-->
-				<label>爱好:</label>
-				<input type="checkbox" name="复选框1" checked="checked" />运动
-				<input type="checkbox" name="复选框1"/>游戏
-				<input type="checkbox" name="复选框1"/>乐器
-				<br />
-				<label>城市:</label>
-				<select  >
-      				<option value="1">北京</option>
-      				<option value="2">上海</option>
-      				<option value="3">xx</option>
-      				<option value="4">yy</option>
-    			</select>
+				<div class="main">
+					<div class="left" ><label>爱好:</label></div>
+					<div class="right">
+						<input type="checkbox" name="复选框1" checked="checked" />运动
+						<input type="checkbox" name="复选框1"/>游戏
+						<input type="checkbox" name="复选框1"/>乐器
+					</div>
+				</div>
+				
+				<div class="main">
+					<div class="left" ><label>城市:</label></div>
+					<div class="right">
+						<select  >
+      						<option value="1">北京</option>
+      						<option value="2">上海</option>
+      						<option value="3">xx</option>
+      						<option value="4">yy</option>
+    					</select>
+					</div>
+				</div>
+				
+				
     			<br />
-				<label>描述:</label>
+    			<div class="main">
+					<div class="left" ><label>描述:</label></div>
+					<div class="right"><textarea value="这是一个多选输入框">文本</textarea></div>
+				</div>
 				<!--	<textarea  rows="行数" cols="列数">文本</textarea>		-->
-				<textarea value="这是一个多选输入框">文本</textarea>
-				<br />
-				<input   type="submit"   value="提交">
+				
+				<input   type="submit" id="submit"  value="提交">
 			</form>  
 		</div>
 		
 		<footer>
-			<p>company 2017</p>
+			<span>版权所有&copy;</span>
 		</footer>
 	</body>
 </html>
