@@ -1,1 +1,58 @@
 
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE HTML Task 04</title>
+		<style>
+			*{margin: 0px;padding: 0px;}
+			.full-page
+			{
+				background-color:#ccc ;
+				height: 200px;
+				width: 400px;
+    			position: absolute; 
+    			/*绝对定位*/
+    			top: 50%; 
+    			left: 50%;
+    			transform: translate(-50%, -50%); 
+    			/*定位在对于左上角的一半的位置 注意原来的重心在左上角加上一半的高度和一半的宽度
+    			 所以这题也可以这样写
+    			 margin-left: -200px;margin-top: -100px;(两者各一半)*/
+			}
+			.full-page .box1
+			{
+				width: 50px;
+				height: 50px;
+				float: left;
+				border-radius: 0px 0px 50px 0px;
+				background-color: #fc0;
+			}
+			.full-page .box2
+			{
+				width: 50px;
+				height: 50px;
+				float: right;
+				margin-top: 150px;
+				/*为什么是150；因为对于原本左上的重心 右下在高度方面需要：盒子高度减去两个1/2box高度也就是200-50/2*2=150*/
+				border-radius: 50px 0px 0px 0px;
+				/*对于一个刚好贴着右下角盒子的box（并不是大圆显示四分之一）
+				 只选择某个边卷曲那么就是一个扇形*/
+				background-color: #fc0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="full-page">
+			<div class="box1">
+			</div>
+			<div class="box2">
+			</div>
+		</div>
+	</body>
+</html>
+<!--
+	通常块级元素的水平居中只需左右margin设为auto
+	行间元素的居中则是由父级设置行高(等于父级高度)和 text-align(center)实现
+	
+-->
