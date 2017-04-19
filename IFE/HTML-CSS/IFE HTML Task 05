@@ -4,11 +4,11 @@
 		<meta charset="UTF-8">
 		<title>IFE HTML Task 05</title>
 		<style>
-		<style>
-			* {margin: 0; padding: 0;}
+			* {/*margin: 0; padding: 0;*/}/*加在这里可以做到没规定的所有margin都为0；但是有时候我想要继承+哪里不对再去规定*/
 			body
 			{
-				background:rgba(128, 128, 128, 0.5);padding: 0;
+				margin: 0; padding: 0;
+				background:rgba(128, 128, 128, 0.5);
 			}
 			nav
 			{
@@ -60,14 +60,22 @@
 			
 			
 			
+			.main
+			{
+				margin-top:70px;
+				/*50是导航栏的 20是div本身*/
+				margin-right: 360px;
+				/*300px+内边距X2+外边距X2*/
+			}
 			.container
 			{
-				margin:10px;/*外边距*/
-				padding:10px;/*内边距*/
+				margin:20px;/*外边距*/
+				padding:20px;/*内边距*/
 				border:1px  solid  white;/*dashed（虚线）| dotted（点线）| solid（实线）*/
 				background: rgba(255, 255, 255, 1);
     			box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);/*右 下 左 上 左上你不要可以不填 左上同样效果比右下不明显*/
 			}
+			
 			.sidebar
 			{
 				margin-top: 0px;
@@ -76,16 +84,7 @@
 				width:300px;
 				float: right;
 			}
-			.main
-			{
-				margin-top:70px;
-				/*50是导航栏的 20是div本身*/
-				margin-right: 340px;
-				/*300px+内边距X2+外边距X2*/
-			}
-			.first-article
-			{
-			}
+			
 			div h1
 			{
 				font-family: "微软雅黑";
@@ -189,8 +188,10 @@
 			{
 				height: 50px;
 				width: screen;
-				margin: 0px -10px -10px -10px;
-				
+				/*margin: 0px -10px -10px -10px;*/
+				/*之前不行的原因是前句中某句css错了导致后面没加载*/
+				line-height: 50px;
+				/*垂直居中：这个方法只限于只有一行的文字或者按钮；多行以后再说*/
 				text-align:center;
 				color: white;
 				background: rgba(0, 0, 0, 0.8);
@@ -222,17 +223,18 @@
 				<!--label标签不会向用户呈现任何特殊效果，它的作用是为鼠标用户改进了可用性。如果你在 label 标签内点击文本，就会触发此控件。就是说，当用户单击选中该label标签时，浏览器就会自动将焦点转到和标签相关的表单控件上（就自动选中和该label标签相关连的表单控件上）。-->
 				<div class="form">
 					<div class="left" ><label for="username" class="1">用户名:</label></div>
-					<div class="right"><input type="text" id="username" value="" /><br /></div>
+					<div class="right"><input type="text" id="username" value="" placeholder="这是一个文本输入框"/><br /></div>
+					<!--placeholder="" 占位符 你想用的那种-->
 				</div>
 				
 				<div class="form">
 					<div class="left" ><label for="pass">密码:</label></div>
-					<div class="right"><input type="password" id="pass" value="" /><br /></div>
+					<div class="right"><input type="password" id="pass" value="" placeholder="●●●●●●●●●●"/><br /></div>
 				</div>
 				
 				<div class="form">
 					<div class="left" ><label for="pass2">请重复输入密码:</label></div>
-					<div class="right"><input type="password" id="pass2" value="" /><br /></div>
+					<div class="right"><input type="password" id="pass2" value="" placeholder="●●●●●●●●●●"/><br /></div>
 				</div>
 				
 				<div class="form">
@@ -269,7 +271,7 @@
     			<br />
     			<div class="form">
 					<div class="left" ><label>描述:</label></div>
-					<div class="right"><textarea value="这是一个多选输入框">文本</textarea></div>
+					<div class="right"><textarea value="" placeholder="这是一个多行输入框，请输入你的个人描述"/></textarea></div>
 				</div>
 				<!--	<textarea  rows="行数" cols="列数">文本</textarea>		-->
 				
