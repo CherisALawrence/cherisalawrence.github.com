@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE HTML Task 05</title>
+		<style>
+		<style>
+			* {margin: 0; padding: 0;}
+			body
+			{
+				background:rgba(128, 128, 128, 0.5);padding: 0;
+			}
+			nav
+			{
+				display:block;
+				position:fixed;
+				width: 100%;/*这样可以做到整个页面上面全覆盖*/
+				height: 50px;
+				left: 0px;
+				right: 0px;
+    			top:0px;
+    			bottom: 0px;
+    			/*这个是有浏览器默认的；不过规定为0之后就是想要的效果了*/
+    			
+				border-bottom: 1px outset rgba(128, 128, 128, 0.5);
+    			background: rgba(0, 0, 0, 0.8);
+    			box-shadow: 0px 1px rgba(0, 0, 0, 0.3);
+			}
+			nav ul
+			{
+				float:right;/*ul整体靠右*/
+				margin:0px;/*如果需要ul不带默认浏览器设置的高度就在这里改默认外边距*/
+				line-height: 50px;/*上一行：顶上的边距没了，但是文字在九宫格的8位；这一行：垂直居中√*/
+				/*这个方法只限于只有一行的文字或者按钮；多行以后再说*/
+			}
+				/*list-style-type:none;*/	/*list-style-type:none - 删除圆点。导航栏不需要列表项标记。*/
+				/*关于删除圆点：li设置成display:inline;自动就不显示了*/
+			.topnav ul li
+			{
+				text-align:center;
+				display:inline-block;/*默认地，<li> 元素是块元素。在这里，我们去除了每个列表项前后的换行，以便让它们在一行中显示。*/
+				float:left;/*float:left - 使用 float 来把块元素滑向彼此。*/
+				/*注意这里的left right：如果写right就会既靠右贴边但是是倒序321；单纯想贴右这里填left 在其他地方写贴边*/
+			}
+			.topnav a
+			{
+				text-decoration:none;/*这样字体下划线就没了*/
+				height: 50px;
+				/*让块状和导航栏一样高，高度要加在这里，50px跟导航栏保持一致*/
+				display:block;/*display:block - 把链接显示为块元素可使整个链接区域可点击（不仅仅是文本），同时也允许我们规定宽度。*/
+				width:100px;/*请始终规定垂直导航栏中 <a> 元素的宽度。如果省略宽度，IE6 会产生意想不到的结果。*/
+				color: gray;
+			}
+			.topnav a:hover,
+			.topnav a:focus
+			{
+				background: rgba(255, 255, 255, 0.5);
+				color: #000;
+			}
+			
+			
+			
+			.container
+			{
+				margin:10px;/*外边距*/
+				padding:10px;/*内边距*/
+				border:1px  solid  white;/*dashed（虚线）| dotted（点线）| solid（实线）*/
+				background: rgba(255, 255, 255, 1);
+    			box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);/*右 下 左 上 左上你不要可以不填 左上同样效果比右下不明显*/
+			}
+			.sidebar
+			{
+				margin-top: 0px;
+				/*因为是跟左边main对齐 但是main设置了什么格式都没(也没有边框)所以这里也弄到跟子元素一样高*/
+				/*真实情况是因为我拖到最前面所以元素默认跟第一个子元素first-article一样高 既然一样就没必要弄margin-top了*/
+				width:300px;
+				float: right;
+			}
+			.main
+			{
+				margin-top:70px;
+				/*50是导航栏的 20是div本身*/
+				margin-right: 340px;
+				/*300px+内边距X2+外边距X2*/
+			}
+			.first-article
+			{
+			}
+			div h1
+			{
+				font-family: "微软雅黑";
+				font-size:20px;
+				color:#000;
+			}
+			div h3
+			{
+				font-family: "微软雅黑";
+				font-size:16px;
+				color:dimgray;
+			}
+			div h5
+			{
+				font-family: "微软雅黑";
+				font-size:12px;
+				color:dimgray;
+			}
+			
+			.picture
+			{
+				display: inline-block;
+				font-size:8px ;
+				padding:0px;
+				width: 200px;
+				text-align:center;
+				border:1px  solid  gray;
+				box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+			}
+			.second-photo img
+			{
+				width:180px;
+				margin-bottom: 10px;
+			}
+			
+			.last-article ol li
+			{
+				font-weight:bold;
+			}
+			
+			table
+			{
+				border-collapse: collapse;
+				/*去掉table表格的间隔；当然自己设定的border还是有的*/
+				width: 100%;
+				/*border:1px  solid  gray;*/
+				/*table设置的border只是table四周 中间还是没有border*/
+				box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+			}
+			table th
+			{
+				background: rgba(0, 0, 0, 0.8);
+				color: white;
+			}
+			table td
+			{
+				border:1px  solid  #C0C0C0;
+			}
+			table .last-tr
+			{
+				background: rgba(111, 111, 111, 0.5);
+			}
+			
+			
+			form
+			{
+				/*vertical-align: middle; 这句没有用啊*/
+				text-align:center;
+			}
+			.form
+			{
+				width: 100% ;
+    			line-height: 2em;/*em不用担心字体大小；是半个汉字的长度*/
+    			display: flex;/*不然会造成虽然40%和60%但一个在上一个在下*/
+				
+			}
+			.form .left
+			{
+				text-align:right;
+				width: 40% ;
+			}
+			.form .right
+			{
+				text-align:left;
+				/*这样就能实现一行文字中间定点对齐*/
+				width: 60% ;
+			}
+			#submit
+			{
+				
+				font-size: 24px;
+				color: white;
+				text-align:center;
+				width: 90% ;
+				height:2em;
+				border-radius: 15px;
+				/*图片的边角变化*/
+				background-color:cornflowerblue ;
+			}
+			footer
+			{
+				height: 50px;
+				width: screen;
+				margin: 0px -10px -10px -10px;
+				
+				text-align:center;
+				color: white;
+				background: rgba(0, 0, 0, 0.8);
+			}
+		</style>
+	</head>
+	
+	<body>
+		<nav class="topnav">
+		<!--nav是HTML5中新标签 定义导航链接的部分-->
+				<ul class="navbar-right">
+					<li><a href="#">导航链接1</a></li>
+					<li><a href="#">导航链接2</a></li>
+					<li><a href="#">导航链接3</a></li>
+					<!--不是herf-->
+				</ul>
+		</nav>
+		
+		<!--sidebar-->
+		<div class="sidebar container">
+			<h1>以后是一个侧栏 这是侧栏的标题</h1>
+			<h3>侧栏注册窗口标题</h3>
+			<!--form表单是可以把浏览者输入的数据传送到服务器端，这样服务器端程序就可以处理表单传过来的数据
+				语法<form   method="传送方式"   action="服务器文件">
+				1、所有表单控件（文本框、文本域、按钮、单选框、复选框等）都必须放在 <form></form> 标签之间（否则用户输入的信息可提交不到服务器上哦！）。
+				2、method : post/get 的区别这一部分内容属于后端程序员考虑的问题。感兴趣的小伙伴可以查看本小节的 wiki，里面有详细介绍。
+			-->
+			<form>
+				<!--label标签不会向用户呈现任何特殊效果，它的作用是为鼠标用户改进了可用性。如果你在 label 标签内点击文本，就会触发此控件。就是说，当用户单击选中该label标签时，浏览器就会自动将焦点转到和标签相关的表单控件上（就自动选中和该label标签相关连的表单控件上）。-->
+				<div class="form">
+					<div class="left" ><label for="username" class="1">用户名:</label></div>
+					<div class="right"><input type="text" id="username" value="" /><br /></div>
+				</div>
+				
+				<div class="form">
+					<div class="left" ><label for="pass">密码:</label></div>
+					<div class="right"><input type="password" id="pass" value="" /><br /></div>
+				</div>
+				
+				<div class="form">
+					<div class="left" ><label for="pass2">请重复输入密码:</label></div>
+					<div class="right"><input type="password" id="pass2" value="" /><br /></div>
+				</div>
+				
+				<div class="form">
+					<div class="left" ><label>性别:</label></div>
+					<div class="right">
+						<input type="radio" name="单选框1" checked="checked" value="男"/>男
+						<input type="radio" name="单选框1" value="女"/>女
+					</div>
+				</div>
+				
+				<!--radio是单选 checkbox是多选 checked="checked"表示默认被选中-->
+				<div class="form">
+					<div class="left" ><label>爱好:</label></div>
+					<div class="right">
+						<input type="checkbox" name="复选框1" checked="checked" />运动
+						<input type="checkbox" name="复选框1"/>游戏
+						<input type="checkbox" name="复选框1"/>乐器
+					</div>
+				</div>
+				
+				<div class="form">
+					<div class="left" ><label>城市:</label></div>
+					<div class="right">
+						<select  >
+      						<option value="1">北京</option>
+      						<option value="2">上海</option>
+      						<option value="3">xx</option>
+      						<option value="4">yy</option>
+    					</select>
+					</div>
+				</div>
+				
+				
+    			<br />
+    			<div class="form">
+					<div class="left" ><label>描述:</label></div>
+					<div class="right"><textarea value="这是一个多选输入框">文本</textarea></div>
+				</div>
+				<!--	<textarea  rows="行数" cols="列数">文本</textarea>		-->
+				
+				<input   type="submit" id="submit"  value="提交">
+			</form>  
+		</div>
+		<div class="main">
+			<div class="container first-article">
+			<h1>文章一级标题</h1>
+			<h3>文章二级标题</h3>
+			<h5>文章作者 发表时间</h5>
+			<p>这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落</p>
+			<p>
+				这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落，换行了<br />这是一个很长的段落这是一个很长的段落这是一个很长的段落
+				<!--并没有换行 不用br的话 这里只是看的方便-->
+				<a href="http://ife.baidu.com/">这里有一个链接连到http://ife.baidu.com</a>
+				这是一个很长的段落这是一个很长的段落这是一个很长的段落，<strong>这里有粗体字</strong>这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落
+				<br />
+				<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+				<br />
+				这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落这是一个很长的段落
+				<a href="http://ife.baidu.com/"target="_blank">这里有一个链接打开后跳出新窗口连到http://ife.baidu.com</a>
+			</p>
+			<ul>
+				<!--注意这里要隐掉ul的点-->
+				<li>列表项目1</li>
+				<li>列表项目2</li>
+				<li>列表项目3</li>
+			</ul>
+			</div>
+			<div class="container second-photo">
+			<h1>图片</h1>
+			<div class="picture">
+				<p>好看的图片</p>
+				<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+			</div>
+			<div class="picture">
+				<p>好看的图片</p>
+				<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+			</div>
+			<div class="picture">
+				<p>好看的图片</p>
+				<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+			</div>
+			<div class="picture">
+				<p>好看的图片</p>
+				<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+			</div>
+			<div class="picture">
+				<p>好看的图片</p>
+				<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+			</div>
+			
+			</div>
+			<div class="container last-article">
+			<h1>最后一篇文章一级标题</h1>
+			<h3>文章二级标题</h3>
+			<h5>文章作者 发表时间</h5>
+			<ol>
+				<li>排名1</li>
+				<li>排名2</li>
+				<li>排名3</li>
+			</ol>
+			<p>下面是一个表格 给表格加了border="1"你们不用加</p>
+			<table>
+				<tbody>
+					<tr>
+						<th>表头</th>
+						<th>表头</th>
+						<th>表头</th>
+					</tr>
+					<tr>
+						<td>表内容单元格</td>
+						<td>表内容单元格</td>
+						<td><a href="#">操作</a></td>
+					</tr>
+					<tr>
+						<td>表内容单元格</td>
+						<td>表内容单元格</td>
+						<td><a href="#">操作</a></td>
+					</tr>
+					<tr class="last-tr">
+						<td>总计</td>
+						<td colspan="2">1000</td>
+						<!--colspan="2"：合并单元格的效果-->
+					</tr>
+				</tbody>
+			</table>
+			</div>
+		</div>
+		<footer>
+			<span>版权所有&copy;</span>
+		</footer>
+	</body>
+</html>
