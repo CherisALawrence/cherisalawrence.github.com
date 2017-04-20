@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE HTML Task 06</title>
+		<style>
+			*{margin: 0px;padding: 0px;}
+			body{background-color:burlywood ;}
+			.page-container
+			{
+				background-color:#C0C0C0;
+				height: 1386px;
+				width: 980px;
+				margin:0 auto;
+    			/*其实这样只是普通的左右对齐而已 直接center就好了*/
+			}
+			.main-container
+			{
+				height:1386px;
+				width: 892px;
+				margin: 0px 44px 0px 44px;
+				background-color:#FFF ;
+			}
+			.nav{position: relative;height:61px;width: 892px;overflow: hidden;}
+			/*盒内沉底：
+			 父元素position: relative;子元素position:absolute并且设置bottom：0px就可以 左右么设置left/right也不用浮动*/
+			.nav-block
+			{
+				height:61px;
+				width: 110px;
+				background-color:red;
+			}
+			.nav .p1{position: absolute;bottom: 0;left: 0;font-size:12px;font-family:"黑体";color:#FFFFFF;}
+			.nav .p2{position: absolute;bottom: 0;right:0;font-size:12px;font-family:"黑体";color:#d45d5c;}
+			.br-1{height: 2px;width: 892px;background-color:#938e8c;}
+			.page1{margin-top: 40px;position: relative;}
+			.photo{height: 301px;width: 641px;position: relative;display: inline-block;}
+			.photo .cover1{position: absolute;left: 0;height: 301px;width: 191px;background-color:rgba(128, 128, 128, 0.5);}
+			.photo .cover2{position: absolute;right:0;height: 301px;width: 191px;background-color:rgba(128, 128, 128, 0.5);}
+			.photo img{height: 301px;width: 641px;}
+			.page1 .page1-sidebar{position: absolute;right:0;height:301px;width:203px;display: inline-block;background-color:#CCCCCC;}
+			.br-2{height: 2px;width: 203px;background-color:#cc8091;}
+			.page1-sidebar p{margin-top:0;font-size:24px;font-family:"黑体";color:#000000;}
+		</style>
+	</head>
+	
+	<body>
+		<div class="page-container">
+			<div class="main-container">
+				<div class="nav">
+					<p class="p1">ife.baidu.com</p>
+					<p class="p2">2016.03</p>
+					<div class="nav-block"></div>
+				</div>
+				<div class="br-1"></div>
+				<div class="page1">
+					<div class="photo">
+						<div class="cover1"></div>
+						<div class="cover2"></div>
+						<img src="https://i0.hdslb.com/bfs/archive/ca0f7bcce93372c888150c5f201091d4b0152d09.jpg@.webp" />
+					</div>
+					<div class="page1-sidebar">
+						<div class="br-2"></div>
+						<p><u>ABOUT</u></p>
+						<p><u>TECHNOLOGE</u></p>
+						<!--首字母单独改fontsize的话下划线就会不一致；所以直接用单独的首字母大写的代码-->
+					</div>
+					
+					
+				</div>
+				
+				
+				
+				
+				
+				
+			</div>
+			<!--main-->
+		</div>
+	</body>
+</html>
